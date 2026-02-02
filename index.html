@@ -237,6 +237,7 @@
         }
 
         // تم ربط الصور بناءً على أسماء الملفات في الصورة المرفقة
+        // الصور غير الموجودة محلياً تستخدم روابط خارجية عالية الجودة
         const products = [
             // --- Espresso Bar ---
             { id: 1, name: "Espresso", nameAr: "إسبريسو", category: "Espresso Bar", image: "images/espresso.jpg", desc: "Single Shot" },
@@ -261,10 +262,11 @@
             { id: 15, name: "Signature House Filter", nameAr: "قهوة اليوم", category: "Specialty Coffee", image: "images/daily-hot.jpg", desc: "Daily Brew" },
 
             // --- Tea & Infusions ---
-            // الكركديه والموهيتو ليس لها صور في جهازك، أبقيت صور الإنترنت لكي لا تظهر فارغة
+            // الكركديه - صورة تخيلية
             { id: 23, name: "Hibiscus (Karkade)", nameAr: "كركديه", category: "Tea & Infusions", image: "https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=400", desc: "Traditional Egyptian Hibiscus" },
 
             // --- Mojito ---
+            // الموهيتو - صور تخيلية
             { id: 16, name: "Classic Mint Mojito", nameAr: "موهيتو كلاسيك", category: "Mojito", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400", desc: "Fresh Lime & Mint" },
             { id: 17, name: "Strawberry Mojito", nameAr: "موهيتو فراولة", category: "Mojito", image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=400", desc: "Sweet Strawberry" },
 
@@ -274,7 +276,7 @@
             { id: 19, name: "Fudgy Chocolate Brownie", nameAr: "براوني", category: "Desserts", image: "images/matilda.jpg", desc: "Rich Chocolate" },
             // استخدمت إنجليش كيك لليمون
             { id: 20, name: "Lemon Loaf Cake", nameAr: "كيكة الليمون", category: "Desserts", image: "images/english-cake.jpg", desc: "Zesty & Moist" },
-            // الكرواسون غير موجود في الصور، أبقيت صورة خارجية
+            // الكروسان - صورة تخيلية
             { id: 21, name: "Butter Croissant", nameAr: "كروسان زبدة", category: "Desserts", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", desc: "Flaky & Buttery" },
             { id: 22, name: "Freshly Baked Cookies", nameAr: "كوكيز", category: "Desserts", image: "images/cookies.jpg", desc: "Warm & Gooey" },
         ];
