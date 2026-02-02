@@ -6,7 +6,7 @@
     <title>DAF Coffee | الزمالك - القاهرة</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -24,6 +24,7 @@
             background-color: var(--daf-bg);
             color: var(--daf-text);
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
         .en-font {
@@ -44,18 +45,12 @@
             opacity: 0;
         }
 
-        /* تأخير ظهور الكروت */
         .product-card:nth-child(1) { animation-delay: 0.1s; }
         .product-card:nth-child(2) { animation-delay: 0.15s; }
         .product-card:nth-child(3) { animation-delay: 0.2s; }
         .product-card:nth-child(4) { animation-delay: 0.25s; }
         .product-card:nth-child(5) { animation-delay: 0.3s; }
 
-        .category-tab {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
         .category-tab.active {
             color: var(--daf-primary);
             font-weight: 800;
@@ -78,79 +73,185 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
+
+        /* شاشات العرض */
+        .screen {
+            display: none;
+            width: 100%;
+            min-h_screen: 100vh;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* زر العودة للرئيسية */
+        .back-to-home {
+            cursor: pointer;
+        }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <!-- Header -->
-    <header class="glass-nav sticky top-0 z-50 border-b border-gray-100/50 shadow-sm transition-all duration-300">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 relative">
-                        <!-- Logo Placeholder -->
-                        <div class="w-full h-full bg-[#425232] rounded-full flex items-center justify-center text-white font-bold text-xl">D</div>
+    <!-- ================= الشاشة الرئيسية (Landing Page) ================= -->
+    <div id="landing-screen" class="screen active min-h-screen flex flex-col items-center justify-center relative bg-[#F3F4F1]">
+        <!-- خلفية زخرفية بسيطة -->
+        <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+        
+        <div class="z-10 text-center px-6 w-full max-w-md">
+            <!-- الشعار -->
+            <div class="w-32 h-32 bg-[#425232] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl ring-4 ring-[#425232]/20">
+                <span class="text-white text-5xl font-bold en-font">D</span>
+            </div>
+            
+            <h1 class="text-4xl font-bold text-[#425232] mb-2 en-font">DAF CAIRO</h1>
+            <p class="text-gray-500 mb-12 tracking-wide text-sm">Zamalek Specialty Experience</p>
+
+            <!-- الأزرار -->
+            <div class="flex flex-col gap-4 w-full">
+                <button onclick="switchScreen('menu-screen')" class="w-full bg-[#425232] text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-[#364229] transition-all transform active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fas fa-mug-hot"></i>
+                    <span>المنيو</span>
+                    <span class="en-font text-sm opacity-70 font-normal">(Menu)</span>
+                </button>
+                
+                <button onclick="switchScreen('about-screen')" class="w-full bg-white text-[#425232] border-2 border-[#425232] py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all transform active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fas fa-info-circle"></i>
+                    <span>نبذة عن داف</span>
+                    <span class="en-font text-sm opacity-70 font-normal">(About Us)</span>
+                </button>
+            </div>
+            
+            <div class="mt-12 flex justify-center gap-6 text-[#425232]/60">
+                <a href="#"><i class="fab fa-instagram text-2xl hover:text-[#425232]"></i></a>
+                <a href="#"><i class="fab fa-tiktok text-2xl hover:text-[#425232]"></i></a>
+                <a href="#"><i class="fas fa-map-marker-alt text-2xl hover:text-[#425232]"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= شاشة نبذة عن داف (About Screen) ================= -->
+    <div id="about-screen" class="screen min-h-screen bg-white">
+        <div class="container mx-auto px-6 py-12 flex flex-col h-full">
+            <button onclick="switchScreen('landing-screen')" class="self-end text-[#425232] text-xl mb-8 hover:opacity-70 flex items-center gap-2">
+                <span class="text-sm font-bold">عودة</span>
+                <i class="fas fa-arrow-left"></i>
+            </button>
+
+            <div class="flex-1 flex flex-col items-center text-center">
+                <h2 class="text-3xl font-bold text-[#425232] mb-8 border-b-4 border-[#60744B] pb-2 inline-block">قصتنا</h2>
+                
+                <p class="text-gray-600 leading-loose text-lg mb-8 max-w-lg">
+                    في داف كافيه، لا نقدم مجرد كوب قهوة، بل نصنع تجربة متكاملة. من قلب الزمالك، نأتيكم بأجود أنواع البن المختص المحمص بعناية فائقة.
+                    <br><br>
+                    هدفنا هو تقديم الجودة العالية بأسلوب بسيط ومينيمالي يعكس هدوء ورقي المكان.
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 w-full max-w-sm mt-4">
+                    <div class="bg-[#F8F9F7] p-4 rounded-xl text-center">
+                        <i class="fas fa-leaf text-[#425232] text-2xl mb-2"></i>
+                        <p class="font-bold text-sm">جودة عالية</p>
                     </div>
-                    <div class="flex flex-col">
-                        <span class="text-xs text-gray-500 font-medium">SPECIALTY COFFEE</span>
-                        <span class="text-xl font-bold text-[#425232] leading-none tracking-tight en-font">DAF CAIRO</span>
+                    <div class="bg-[#F8F9F7] p-4 rounded-xl text-center">
+                        <i class="fas fa-coffee text-[#425232] text-2xl mb-2"></i>
+                        <p class="font-bold text-sm">قهوة مختصة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= شاشة المنيو (Menu Screen) ================= -->
+    <div id="menu-screen" class="screen pb-24">
+        <!-- Header -->
+        <header class="glass-nav sticky top-0 z-50 border-b border-gray-100/50 shadow-sm transition-all duration-300">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <!-- Logo Button (Back to Home) -->
+                    <div onclick="switchScreen('landing-screen')" class="back-to-home flex items-center gap-3 cursor-pointer group">
+                        <div class="w-12 h-12 relative transition-transform group-hover:scale-105">
+                            <div class="w-full h-full bg-[#425232] rounded-full flex items-center justify-center text-white font-bold text-xl">D</div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-500 font-medium">SPECIALTY COFFEE</span>
+                            <span class="text-xl font-bold text-[#425232] leading-none tracking-tight en-font group-hover:text-[#60744B] transition-colors">DAF CAIRO</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="switchScreen('landing-screen')" class="text-[#425232] p-2 hover:bg-gray-100 rounded-full transition-colors">
+                            <i class="fas fa-home text-xl"></i>
+                        </button>
                     </div>
                 </div>
 
-                <div class="flex gap-3">
-                    <a href="#" class="text-[#425232] hover:text-[#60744B] transition-colors">
-                        <i class="fab fa-instagram text-2xl"></i>
-                    </a>
+                <!-- Search -->
+                <div class="mt-4 relative group">
+                    <input type="text" id="search-input" placeholder="Search menu..." 
+                        class="w-full bg-[#F3F4F1] border-none rounded-xl py-3 px-10 text-sm text-[#425232] placeholder-gray-400 focus:ring-2 focus:ring-[#425232]/20 transition-all text-left dir-ltr">
+                    <span class="absolute right-3 top-3 text-gray-400 group-focus-within:text-[#425232] transition-colors">
+                        <i class="fas fa-search"></i>
+                    </span>
                 </div>
             </div>
 
-            <!-- Search -->
-            <div class="mt-4 relative group">
-                <input type="text" id="search-input" placeholder="Search menu..." 
-                    class="w-full bg-[#F3F4F1] border-none rounded-xl py-3 px-10 text-sm text-[#425232] placeholder-gray-400 focus:ring-2 focus:ring-[#425232]/20 transition-all text-left dir-ltr">
-                <span class="absolute right-3 top-3 text-gray-400 group-focus-within:text-[#425232] transition-colors">
-                    <i class="fas fa-search"></i>
-                </span>
+            <!-- Categories -->
+            <div class="w-full border-t border-gray-100 overflow-x-auto hide-scrollbar bg-white/80">
+                <div class="container mx-auto px-4 flex items-center gap-6 h-12 min-w-max" id="categories-container">
+                    <!-- Categories injected via JS -->
+                </div>
             </div>
-        </div>
+        </header>
 
-        <!-- Categories -->
-        <div class="w-full border-t border-gray-100 overflow-x-auto hide-scrollbar bg-white/80">
-            <div class="container mx-auto px-4 flex items-center gap-6 h-12 min-w-max" id="categories-container">
-                <!-- Categories injected via JS -->
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between mb-5">
+                <h2 id="section-title" class="text-xl font-bold text-[#425232] en-font">All Items</h2>
+                <span class="text-xs text-gray-400 bg-white px-2 py-1 rounded-md border border-gray-100 shadow-sm" id="items-count">0 items</span>
             </div>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-6">
-        <div class="flex items-center justify-between mb-5">
-            <h2 id="section-title" class="text-xl font-bold text-[#425232] en-font">All Items</h2>
-            <span class="text-xs text-gray-400 bg-white px-2 py-1 rounded-md border border-gray-100 shadow-sm" id="items-count">0 items</span>
-        </div>
-
-        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <!-- Products injected via JS -->
-        </div>
-    </main>
-
-    <!-- Location Footer -->
-    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 w-[90%] max-w-md">
-        <div class="bg-[#425232] text-white rounded-full shadow-2xl py-3 px-6 flex justify-between items-center backdrop-blur-md bg-opacity-95">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-map-marker-alt text-[#A3B197]"></i>
-                <span class="text-sm font-medium en-font">Zamalek, Cairo</span>
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Products injected via JS -->
             </div>
-            <div class="h-4 w-[1px] bg-white/20"></div>
-            <a href="#" class="text-sm font-bold flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <span>Follow Us</span>
-                <i class="fab fa-instagram text-lg"></i>
-            </a>
+        </main>
+
+        <!-- Location Footer -->
+        <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 w-[90%] max-w-md">
+            <div class="bg-[#425232] text-white rounded-full shadow-2xl py-3 px-6 flex justify-between items-center backdrop-blur-md bg-opacity-95">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-map-marker-alt text-[#A3B197]"></i>
+                    <span class="text-sm font-medium en-font">Zamalek, Cairo</span>
+                </div>
+                <div class="h-4 w-[1px] bg-white/20"></div>
+                <a href="#" class="text-sm font-bold flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <span>Follow Us</span>
+                    <i class="fab fa-instagram text-lg"></i>
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        // بيانات المنتجات بناءً على ملف PDF المرفق
+        // === Screen Navigation Logic ===
+        function switchScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Show target screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Scroll top
+            window.scrollTo(0, 0);
+        }
+
+        // === Product Data ===
         const products = [
             // --- Espresso Bar ---
             { id: 1, name: "Espresso", nameAr: "إسبريسو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1526406972043-c98b28c23708?w=400", desc: "Single Shot" },
@@ -226,7 +327,6 @@
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                             onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0F2EF/425232?text=DAF';"
                         >
-                        <!-- Price Tag Removed as requested -->
                     </div>
                     
                     <div class="p-4">
