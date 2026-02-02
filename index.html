@@ -74,16 +74,16 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
-        /* شاشات العرض */
+        /* --- إصلاح التنقل بين الشاشات --- */
         .screen {
-            display: none;
             width: 100%;
-            min-h_screen: 100vh;
+            min-height: 100vh;
             animation: fadeIn 0.4s ease-in-out;
         }
 
-        .screen.active {
-            display: block;
+        /* إخفاء الشاشة إذا لم تكن نشطة بقوة (للتغلب على tailwind flex) */
+        .screen:not(.active) {
+            display: none !important;
         }
 
         @keyframes fadeIn {
