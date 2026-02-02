@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DAF Coffee | الزمالك - القاهرة</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* === إعدادات الهوية البصرية === */
+        :root {
+            --daf-primary: #425232;       /* الزيتوني الغامق */
+            --daf-accent: #60744B;        /* زيتوني أفتح قليلاً */
+            --daf-surface: #FFFFFF;       /* سطح البطاقات */
+            --daf-bg: #F8F9F7;            /* خلفية الموقع */
+            --daf-text: #2C3325;          /* لون النصوص */
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--daf-bg);
+            color: var(--daf-text);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .en-font {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .product-card {
+            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* تأخير ظهور الكروت */
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.15s; }
+        .product-card:nth-child(3) { animation-delay: 0.2s; }
+        .product-card:nth-child(4) { animation-delay: 0.25s; }
+        .product-card:nth-child(5) { animation-delay: 0.3s; }
+
+        .category-tab {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tab.active {
+            color: var(--daf-primary);
+            font-weight: 800;
+        }
+        
+        .category-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background-color: var(--daf-primary);
+            border-radius: 10px;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <!-- Header -->
+    <header class="glass-nav sticky top-0 z-50 border-b border-gray-100/50 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 relative">
+                        <!-- Logo Placeholder -->
+                        <div class="w-full h-full bg-[#425232] rounded-full flex items-center justify-center text-white font-bold text-xl">D</div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-500 font-medium">SPECIALTY COFFEE</span>
+                        <span class="text-xl font-bold text-[#425232] leading-none tracking-tight en-font">DAF CAIRO</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <a href="#" class="text-[#425232] hover:text-[#60744B] transition-colors">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="mt-4 relative group">
+                <input type="text" id="search-input" placeholder="Search menu..." 
+                    class="w-full bg-[#F3F4F1] border-none rounded-xl py-3 px-10 text-sm text-[#425232] placeholder-gray-400 focus:ring-2 focus:ring-[#425232]/20 transition-all text-left dir-ltr">
+                <span class="absolute right-3 top-3 text-gray-400 group-focus-within:text-[#425232] transition-colors">
+                    <i class="fas fa-search"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="w-full border-t border-gray-100 overflow-x-auto hide-scrollbar bg-white/80">
+            <div class="container mx-auto px-4 flex items-center gap-6 h-12 min-w-max" id="categories-container">
+                <!-- Categories injected via JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex items-center justify-between mb-5">
+            <h2 id="section-title" class="text-xl font-bold text-[#425232] en-font">All Items</h2>
+            <span class="text-xs text-gray-400 bg-white px-2 py-1 rounded-md border border-gray-100 shadow-sm" id="items-count">0 items</span>
+        </div>
+
+        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Products injected via JS -->
+        </div>
+    </main>
+
+    <!-- Location Footer -->
+    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 w-[90%] max-w-md">
+        <div class="bg-[#425232] text-white rounded-full shadow-2xl py-3 px-6 flex justify-between items-center backdrop-blur-md bg-opacity-95">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-map-marker-alt text-[#A3B197]"></i>
+                <span class="text-sm font-medium en-font">Zamalek, Cairo</span>
+            </div>
+            <div class="h-4 w-[1px] bg-white/20"></div>
+            <a href="#" class="text-sm font-bold flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <span>Follow Us</span>
+                <i class="fab fa-instagram text-lg"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المنتجات بناءً على ملف PDF المرفق
+        const products = [
+            // --- Espresso Bar ---
+            { id: 1, name: "Espresso", nameAr: "إسبريسو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1526406972043-c98b28c23708?w=400", desc: "Single Shot" },
+            { id: 2, name: "Double Espresso", nameAr: "دبل إسبريسو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1526406972043-c98b28c23708?w=400", desc: "Rich & Intense" },
+            { id: 3, name: "Americano", nameAr: "أمريكانو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1551030173-122aabc4489c?w=400", desc: "Hot Water & Espresso" },
+            { id: 4, name: "Cortado", nameAr: "كورتادو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400", desc: "Equal parts espresso & milk" },
+            { id: 5, name: "Flat White", nameAr: "فلات وايت", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400", desc: "Silky textured milk" },
+            { id: 6, name: "Cappuccino", nameAr: "كابتشينو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400", desc: "Frothy milk" },
+            { id: 7, name: "Latte", nameAr: "لاتيه", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1593443320739-77f74952d48e?w=400", desc: "Creamy milk" },
+            { id: 8, name: "Iced Latte", nameAr: "آيس لاتيه", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1517701604599-bb29b5dd7359?w=400", desc: "Chilled perfection" },
+            { id: 9, name: "Iced Americano", nameAr: "آيس أمريكانو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400", desc: "Refreshing black coffee" },
+            { id: 10, name: "Iced Spanish Latte", nameAr: "آيس سبانش لاتيه", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400", desc: "Sweet condensed milk" },
+
+            // --- Specialty Coffee ---
+            { id: 11, name: "V60 - Ethiopia", nameAr: "V60 أثيوبيا", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1517080788627-2c5255476d09?w=400", desc: "Floral & Citrus Notes" },
+            { id: 12, name: "V60 - Colombia", nameAr: "V60 كولومبيا", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400", desc: "Balanced & Chocolatey" },
+            { id: 13, name: "V60 - Brazil", nameAr: "V60 البرازيل", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1518832553480-cd0e625ed3e6?w=400", desc: "Nutty & Sweet" },
+            { id: 14, name: "Cold Brew", nameAr: "كولد برو", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1596561136324-4f40f0f35368?w=400", desc: "Steeped for 24 hours" },
+            { id: 15, name: "Signature House Filter", nameAr: "قهوة اليوم", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1522255272218-7ac535c8227b?w=400", desc: "Daily Brew" },
+
+            // --- Tea & Infusions ---
+            { id: 23, name: "Hibiscus (Karkade)", nameAr: "كركديه", category: "Tea & Infusions", image: "https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=400", desc: "Traditional Egyptian Hibiscus" },
+
+            // --- Mojito ---
+            { id: 16, name: "Classic Mint Mojito", nameAr: "موهيتو كلاسيك", category: "Mojito", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400", desc: "Fresh Lime & Mint" },
+            { id: 17, name: "Strawberry Mojito", nameAr: "موهيتو فراولة", category: "Mojito", image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=400", desc: "Sweet Strawberry" },
+
+            // --- Desserts ---
+            { id: 18, name: "Burnt Basque Cheesecake", nameAr: "سان سباستيان", category: "Desserts", image: "https://images.unsplash.com/photo-1567327613485-fbc7bf196198?w=400", desc: "Creamy & Burnt Top" },
+            { id: 19, name: "Fudgy Chocolate Brownie", nameAr: "براوني", category: "Desserts", image: "https://images.unsplash.com/photo-1553452118-621e1f860f43?w=400", desc: "Rich Chocolate" },
+            { id: 20, name: "Lemon Loaf Cake", nameAr: "كيكة الليمون", category: "Desserts", image: "https://images.unsplash.com/photo-1519869325930-281384150729?w=400", desc: "Zesty & Moist" },
+            { id: 21, name: "Butter Croissant", nameAr: "كروسان زبدة", category: "Desserts", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", desc: "Flaky & Buttery" },
+            { id: 22, name: "Freshly Baked Cookies", nameAr: "كوكيز", category: "Desserts", image: "https://images.unsplash.com/photo-1499636138143-bd649043ea52?w=400", desc: "Warm & Gooey" },
+        ];
+
+        const categories = ["All", "Espresso Bar", "Specialty Coffee", "Tea & Infusions", "Mojito", "Desserts"];
+        let currentCategory = "All";
+
+        function renderCategories() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = categories.map(cat => `
+                <button 
+                    onclick="filterMenu('${cat}')"
+                    class="category-tab text-sm font-medium text-gray-500 whitespace-nowrap hover:text-[#425232] px-2 en-font ${currentCategory === cat ? 'active' : ''}"
+                >
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function renderProducts(items) {
+            const grid = document.getElementById('menu-grid');
+            const countLabel = document.getElementById('items-count');
+            
+            countLabel.innerText = `${items.length} items`;
+
+            if (items.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center justify-center py-20 opacity-50">
+                        <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4 text-2xl text-gray-400">☕</div>
+                        <p class="text-gray-500">No items found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(66,82,50,0.12)] transition-all duration-300 group border border-gray-50">
+                    <div class="relative h-48 overflow-hidden bg-[#F8F8F6]">
+                        <img 
+                            src="${item.image}" 
+                            alt="${item.name}" 
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0F2EF/425232?text=DAF';"
+                        >
+                        <!-- Price Tag Removed as requested -->
+                    </div>
+                    
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div class="w-full">
+                                <div class="flex justify-between items-baseline mb-1">
+                                    <h3 class="font-bold text-[#2C3325] text-lg group-hover:text-[#425232] transition-colors en-font">${item.name}</h3>
+                                    <span class="text-xs text-gray-400 font-medium font-sans">${item.nameAr}</span>
+                                </div>
+                                
+                                ${item.desc ? `
+                                    <div class="flex items-center gap-1 mt-1">
+                                        <div class="h-1 w-1 rounded-full bg-[#60744B]"></div>
+                                        <p class="text-xs text-gray-500 leading-relaxed font-medium">${item.desc}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterMenu(category) {
+            currentCategory = category;
+            document.getElementById('section-title').innerText = category === "All" ? "All Items" : category;
+            renderCategories();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = ''; 
+            
+            setTimeout(() => {
+                if (category === "All") {
+                    renderProducts(products);
+                } else {
+                    renderProducts(products.filter(p => p.category === category));
+                }
+            }, 50);
+        }
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(term) || 
+                p.nameAr.includes(term) ||
+                (p.desc && p.desc.toLowerCase().includes(term))
+            );
+            
+            document.getElementById('section-title').innerText = term ? `Results for: ${term}` : "All Items";
+            renderProducts(filtered);
+            
+            currentCategory = "All";
+            renderCategories();
+        });
+
+        // Initialize
+        renderCategories();
+        renderProducts(products);
+    </script>
+</body>
+</html>
