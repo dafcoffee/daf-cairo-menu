@@ -81,7 +81,6 @@
             animation: fadeIn 0.4s ease-in-out;
         }
 
-        /* إخفاء الشاشة إذا لم تكن نشطة بقوة (للتغلب على tailwind flex) */
         .screen:not(.active) {
             display: none !important;
         }
@@ -91,7 +90,6 @@
             to { opacity: 1; }
         }
 
-        /* زر العودة للرئيسية */
         .back-to-home {
             cursor: pointer;
         }
@@ -101,19 +99,20 @@
 
     <!-- ================= الشاشة الرئيسية (Landing Page) ================= -->
     <div id="landing-screen" class="screen active min-h-screen flex flex-col items-center justify-center relative bg-[#F3F4F1]">
-        <!-- خلفية زخرفية بسيطة -->
         <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
         
         <div class="z-10 text-center px-6 w-full max-w-md">
-            <!-- الشعار -->
-            <div class="w-32 h-32 bg-[#425232] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl ring-4 ring-[#425232]/20">
-                <span class="text-white text-5xl font-bold en-font">D</span>
+            <!-- الشعار (تم تحديثه ليأخذ من الصور المرفوعة) -->
+            <div class="w-40 h-40 mx-auto mb-6 relative">
+                <img src="images/logo.png" alt="DAF Logo" class="w-full h-full object-contain drop-shadow-xl"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <!-- Fallback Logo if image fails -->
+                <div class="w-full h-full bg-[#425232] rounded-full hidden items-center justify-center text-white font-bold text-5xl absolute top-0 left-0">D</div>
             </div>
             
             <h1 class="text-4xl font-bold text-[#425232] mb-2 en-font">DAF CAIRO</h1>
             <p class="text-gray-500 mb-12 tracking-wide text-sm">Zamalek Specialty Experience</p>
 
-            <!-- الأزرار -->
             <div class="flex flex-col gap-4 w-full">
                 <button onclick="switchScreen('menu-screen')" class="w-full bg-[#425232] text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-[#364229] transition-all transform active:scale-95 flex items-center justify-center gap-3">
                     <i class="fas fa-mug-hot"></i>
@@ -169,14 +168,13 @@
 
     <!-- ================= شاشة المنيو (Menu Screen) ================= -->
     <div id="menu-screen" class="screen pb-24">
-        <!-- Header -->
         <header class="glass-nav sticky top-0 z-50 border-b border-gray-100/50 shadow-sm transition-all duration-300">
             <div class="container mx-auto px-4 py-3">
                 <div class="flex justify-between items-center">
                     <!-- Logo Button (Back to Home) -->
                     <div onclick="switchScreen('landing-screen')" class="back-to-home flex items-center gap-3 cursor-pointer group">
                         <div class="w-12 h-12 relative transition-transform group-hover:scale-105">
-                            <div class="w-full h-full bg-[#425232] rounded-full flex items-center justify-center text-white font-bold text-xl">D</div>
+                            <img src="images/logo.png" class="w-full h-full object-contain">
                         </div>
                         <div class="flex flex-col">
                             <span class="text-xs text-gray-500 font-medium">SPECIALTY COFFEE</span>
@@ -191,7 +189,6 @@
                     </div>
                 </div>
 
-                <!-- Search -->
                 <div class="mt-4 relative group">
                     <input type="text" id="search-input" placeholder="Search menu..." 
                         class="w-full bg-[#F3F4F1] border-none rounded-xl py-3 px-10 text-sm text-[#425232] placeholder-gray-400 focus:ring-2 focus:ring-[#425232]/20 transition-all text-left dir-ltr">
@@ -201,27 +198,20 @@
                 </div>
             </div>
 
-            <!-- Categories -->
             <div class="w-full border-t border-gray-100 overflow-x-auto hide-scrollbar bg-white/80">
-                <div class="container mx-auto px-4 flex items-center gap-6 h-12 min-w-max" id="categories-container">
-                    <!-- Categories injected via JS -->
-                </div>
+                <div class="container mx-auto px-4 flex items-center gap-6 h-12 min-w-max" id="categories-container"></div>
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="container mx-auto px-4 py-6">
             <div class="flex items-center justify-between mb-5">
                 <h2 id="section-title" class="text-xl font-bold text-[#425232] en-font">All Items</h2>
                 <span class="text-xs text-gray-400 bg-white px-2 py-1 rounded-md border border-gray-100 shadow-sm" id="items-count">0 items</span>
             </div>
 
-            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- Products injected via JS -->
-            </div>
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         </main>
 
-        <!-- Location Footer -->
         <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 w-[90%] max-w-md">
             <div class="bg-[#425232] text-white rounded-full shadow-2xl py-3 px-6 flex justify-between items-center backdrop-blur-md bg-opacity-95">
                 <div class="flex items-center gap-2">
@@ -238,41 +228,40 @@
     </div>
 
     <script>
-        // === Screen Navigation Logic ===
         function switchScreen(screenId) {
-            // Hide all screens
             document.querySelectorAll('.screen').forEach(el => {
                 el.classList.remove('active');
             });
-            // Show target screen
             document.getElementById(screenId).classList.add('active');
-            
-            // Scroll top
             window.scrollTo(0, 0);
         }
 
-        // === Product Data ===
+        // تم ربط الصور بناءً على أسماء الملفات في الصورة المرفقة
         const products = [
             // --- Espresso Bar ---
-            { id: 1, name: "Espresso", nameAr: "إسبريسو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1526406972043-c98b28c23708?w=400", desc: "Single Shot" },
-            { id: 2, name: "Double Espresso", nameAr: "دبل إسبريسو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1526406972043-c98b28c23708?w=400", desc: "Rich & Intense" },
-            { id: 3, name: "Americano", nameAr: "أمريكانو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1551030173-122aabc4489c?w=400", desc: "Hot Water & Espresso" },
-            { id: 4, name: "Cortado", nameAr: "كورتادو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400", desc: "Equal parts espresso & milk" },
-            { id: 5, name: "Flat White", nameAr: "فلات وايت", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400", desc: "Silky textured milk" },
-            { id: 6, name: "Cappuccino", nameAr: "كابتشينو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400", desc: "Frothy milk" },
-            { id: 7, name: "Latte", nameAr: "لاتيه", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1593443320739-77f74952d48e?w=400", desc: "Creamy milk" },
-            { id: 8, name: "Iced Latte", nameAr: "آيس لاتيه", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1517701604599-bb29b5dd7359?w=400", desc: "Chilled perfection" },
-            { id: 9, name: "Iced Americano", nameAr: "آيس أمريكانو", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400", desc: "Refreshing black coffee" },
-            { id: 10, name: "Iced Spanish Latte", nameAr: "آيس سبانش لاتيه", category: "Espresso Bar", image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400", desc: "Sweet condensed milk" },
+            { id: 1, name: "Espresso", nameAr: "إسبريسو", category: "Espresso Bar", image: "images/espresso.jpg", desc: "Single Shot" },
+            { id: 2, name: "Double Espresso", nameAr: "دبل إسبريسو", category: "Espresso Bar", image: "images/espresso.jpg", desc: "Rich & Intense" },
+            { id: 3, name: "Americano", nameAr: "أمريكانو", category: "Espresso Bar", image: "images/americano.jpg", desc: "Hot Water & Espresso" },
+            { id: 4, name: "Cortado", nameAr: "كورتادو", category: "Espresso Bar", image: "images/cortado.jpg", desc: "Equal parts espresso & milk" },
+            { id: 5, name: "Flat White", nameAr: "فلات وايت", category: "Espresso Bar", image: "images/flatwhite.jpg", desc: "Silky textured milk" },
+            { id: 6, name: "Cappuccino", nameAr: "كابتشينو", category: "Espresso Bar", image: "images/cappuccino.jpg", desc: "Frothy milk" },
+            { id: 7, name: "Latte", nameAr: "لاتيه", category: "Espresso Bar", image: "images/latte.jpg", desc: "Creamy milk" },
+            { id: 8, name: "Iced Latte", nameAr: "آيس لاتيه", category: "Espresso Bar", image: "images/latte-iced.jpg", desc: "Chilled perfection" },
+            { id: 9, name: "Iced Americano", nameAr: "آيس أمريكانو", category: "Espresso Bar", image: "images/americano-iced.jpg", desc: "Refreshing black coffee" },
+            { id: 10, name: "Iced Spanish Latte", nameAr: "آيس سبانش لاتيه", category: "Espresso Bar", image: "images/spanish-iced.jpg", desc: "Sweet condensed milk" },
 
             // --- Specialty Coffee ---
-            { id: 11, name: "V60 - Ethiopia", nameAr: "V60 أثيوبيا", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1517080788627-2c5255476d09?w=400", desc: "Floral & Citrus Notes" },
-            { id: 12, name: "V60 - Colombia", nameAr: "V60 كولومبيا", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400", desc: "Balanced & Chocolatey" },
-            { id: 13, name: "V60 - Brazil", nameAr: "V60 البرازيل", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1518832553480-cd0e625ed3e6?w=400", desc: "Nutty & Sweet" },
-            { id: 14, name: "Cold Brew", nameAr: "كولد برو", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1596561136324-4f40f0f35368?w=400", desc: "Steeped for 24 hours" },
-            { id: 15, name: "Signature House Filter", nameAr: "قهوة اليوم", category: "Specialty Coffee", image: "https://images.unsplash.com/photo-1522255272218-7ac535c8227b?w=400", desc: "Daily Brew" },
+            // استخدمت صورة v60-hot.jpg لجميع أنواع الـ V60
+            { id: 11, name: "V60 - Ethiopia", nameAr: "V60 أثيوبيا", category: "Specialty Coffee", image: "images/v60-hot.jpg", desc: "Floral & Citrus Notes" },
+            { id: 12, name: "V60 - Colombia", nameAr: "V60 كولومبيا", category: "Specialty Coffee", image: "images/v60-hot.jpg", desc: "Balanced & Chocolatey" },
+            { id: 13, name: "V60 - Brazil", nameAr: "V60 البرازيل", category: "Specialty Coffee", image: "images/v60-hot.jpg", desc: "Nutty & Sweet" },
+            // استخدمت daily-iced.jpg للكولد برو لأنها الأنسب
+            { id: 14, name: "Cold Brew", nameAr: "كولد برو", category: "Specialty Coffee", image: "images/daily-iced.jpg", desc: "Steeped for 24 hours" },
+            // استخدمت daily-hot.jpg لقهوة اليوم
+            { id: 15, name: "Signature House Filter", nameAr: "قهوة اليوم", category: "Specialty Coffee", image: "images/daily-hot.jpg", desc: "Daily Brew" },
 
             // --- Tea & Infusions ---
+            // الكركديه والموهيتو ليس لها صور في جهازك، أبقيت صور الإنترنت لكي لا تظهر فارغة
             { id: 23, name: "Hibiscus (Karkade)", nameAr: "كركديه", category: "Tea & Infusions", image: "https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=400", desc: "Traditional Egyptian Hibiscus" },
 
             // --- Mojito ---
@@ -280,11 +269,14 @@
             { id: 17, name: "Strawberry Mojito", nameAr: "موهيتو فراولة", category: "Mojito", image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=400", desc: "Sweet Strawberry" },
 
             // --- Desserts ---
-            { id: 18, name: "Burnt Basque Cheesecake", nameAr: "سان سباستيان", category: "Desserts", image: "https://images.unsplash.com/photo-1567327613485-fbc7bf196198?w=400", desc: "Creamy & Burnt Top" },
-            { id: 19, name: "Fudgy Chocolate Brownie", nameAr: "براوني", category: "Desserts", image: "https://images.unsplash.com/photo-1553452118-621e1f860f43?w=400", desc: "Rich Chocolate" },
-            { id: 20, name: "Lemon Loaf Cake", nameAr: "كيكة الليمون", category: "Desserts", image: "https://images.unsplash.com/photo-1519869325930-281384150729?w=400", desc: "Zesty & Moist" },
+            { id: 18, name: "Burnt Basque Cheesecake", nameAr: "سان سباستيان", category: "Desserts", image: "images/san-sebastian.jpg", desc: "Creamy & Burnt Top" },
+            // استخدمت صورة ماتيلدا للبراوني لأنها شوكولاتة
+            { id: 19, name: "Fudgy Chocolate Brownie", nameAr: "براوني", category: "Desserts", image: "images/matilda.jpg", desc: "Rich Chocolate" },
+            // استخدمت إنجليش كيك لليمون
+            { id: 20, name: "Lemon Loaf Cake", nameAr: "كيكة الليمون", category: "Desserts", image: "images/english-cake.jpg", desc: "Zesty & Moist" },
+            // الكرواسون غير موجود في الصور، أبقيت صورة خارجية
             { id: 21, name: "Butter Croissant", nameAr: "كروسان زبدة", category: "Desserts", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", desc: "Flaky & Buttery" },
-            { id: 22, name: "Freshly Baked Cookies", nameAr: "كوكيز", category: "Desserts", image: "https://images.unsplash.com/photo-1499636138143-bd649043ea52?w=400", desc: "Warm & Gooey" },
+            { id: 22, name: "Freshly Baked Cookies", nameAr: "كوكيز", category: "Desserts", image: "images/cookies.jpg", desc: "Warm & Gooey" },
         ];
 
         const categories = ["All", "Espresso Bar", "Specialty Coffee", "Tea & Infusions", "Mojito", "Desserts"];
@@ -325,7 +317,7 @@
                             src="${item.image}" 
                             alt="${item.name}" 
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                            onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0F2EF/425232?text=DAF';"
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0F2EF/425232?text=No+Image';"
                         >
                     </div>
                     
